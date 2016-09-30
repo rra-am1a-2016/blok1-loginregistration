@@ -13,7 +13,7 @@
                 <?php include("link.php"); ?>
             </div>
             <div id="content">
-                <?php include("content.php"); ?>
+                <?php include("redirect.php"); ?>
             </div>
             <div id="footer">
                 <?php include("footer.php"); ?>
