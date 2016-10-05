@@ -38,18 +38,39 @@ div
 ul
 {
     list-style-type: none;
-    width: 20%;
-    border:2px solid green;
+    width: 100%;
+    border:0px solid green;
     margin: 0em auto;
+    background-color: #dddddd;
 }
 
 a
 {
-    text-decoration: none; 
+    text-decoration: none;
+    color: #000;
+    /*padding: 8px 16px;  */
+    border: 0px solid pink;
 }
+
+
+
+a:active 
+{
+    background-color: #4CAF50;
+    color: white;
+}
+
+a:hover
+{
+    background-color: #555;
+    color: white;
+}
+
+
 
 li
 {
-    border: 2px solid red;
+    border: 0px solid red;
+    padding: 2em;
     display: inline;
 }
