@@ -21,10 +21,23 @@
                                   '".$lastname."',
                                   '".$email."')";
       
-      echo $sql; exit();
+      //echo $sql; exit();
+      $result = mysqli_query($conn, $sql);
+      if ($result)
+      {
+         echo "Uw bent geregistreerd";
+         header("refresh:3; url=./index.php?content=home");
+      }
+      else
+      {
+         echo "Registreer opnieuw, er is iets misgegaan";
+         header("refresh:3; url=./index.php?content=register_form");
+      }
 
 
    }
+   else
+   {
 ?>
 
 
@@ -54,3 +67,6 @@
       </tr>
    </table>
 </form>
+<?php
+   }
+?>
