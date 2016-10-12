@@ -31,13 +31,15 @@
                                    `infix`,
                                    `lastname`,
                                    `email`,
-                                   `password`)
+                                   `password`,
+                                   `activate`)
               VALUES             (NULL,
                                   '".$firstname."',
                                   '".$infix."',
                                   '".$lastname."',
                                   '".$email."',
-                                  '".$tempPassword."')";
+                                  '".$tempPassword."',
+                                  'false')";
       
       // Vuur de query af op de database via de verbinding $conn
       $result = mysqli_query($conn, $sql);

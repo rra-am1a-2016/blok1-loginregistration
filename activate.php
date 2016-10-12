@@ -10,7 +10,8 @@
       {
          // De wachtwoorden zijn gelijk dus kunnen we de uodate query voor het nieuwe wachtwoord maken
          $sql = "UPDATE `users` 
-                 SET    `password` = '".sha1($_POST["password"])."'
+                 SET    `password` = '".sha1($_POST["password"])."',
+                        `activate` = 'true'
                  WHERE  `id` = ".$_POST["id"];
 
          // Vuur de query af op de database
