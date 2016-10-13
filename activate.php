@@ -42,52 +42,61 @@
       // Zet de resource om naar een associatief array//
       $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-      // Check of het wachtwoord in de database gelijk is aan het wachtwoord dat is meegegeven in de URL
-      if ( !strcmp($record["password"], $_GET["pw"]))
-      {
-         // Maak een lege variabele $form;
-         $form = "";
+      //echo $record["activate"];
 
-         // Stop in deze string variabele een formulier met...
-         // 2 input tags van type password 
-         // 2 input tags van type hidden (id en pw)
-         // 1 input tag type submit
-         $form .= "<form action='./index.php?content=activate' method='post'>
-                        <table>
-                           <tr>
-                              <td>nieuw wachtwoord</td>
-                              <td>
-                                 <input type='password' name='password'>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>nogmaals wachtwoord</td>
-                              <td>
-                                 <input type='password' name='controle_password'>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td></td>
-                              <td>
-                                 <input type='submit' name='submit'>
-                              </td>
-                           </tr>
-                        </table> 
-                        <input type='hidden' value='".$_GET["id"]."' name='id'>    
-                        <input type='hidden' value='".$_GET["pw"]."' name='pw'>     
-                  </form>";
-
-      }
-      else
+      if ( $record["activate"] == "false")
       {
-            
-         echo "De password strings zijn niet gelijk";
-      }
+            // Check of het wachtwoord in de database gelijk is aan het wachtwoord dat is meegegeven in de URL
+            if ( !strcmp($record["password"], $_GET["pw"]))
+            {
+            // Maak een lege variabele $form;
+            $form = "";
+
+            // Stop in deze string variabele een formulier met...
+            // 2 input tags van type password 
+            // 2 input tags van type hidden (id en pw)
+            // 1 input tag type submit
+            $form .= "<form action='./index.php?content=activate' method='post'>
+                              <table>
+                              <tr>
+                                    <td>nieuw wachtwoord</td>
+                                    <td>
+                                    <input type='password' name='password'>
+                                    </td>
+                              </tr>
+                              <tr>
+                                    <td>nogmaals wachtwoord</td>
+                                    <td>
+                                    <input type='password' name='controle_password'>
+                                    </td>
+                              </tr>
+                              <tr>
+                                    <td></td>
+                                    <td>
+                                    <input type='submit' name='submit'>
+                                    </td>
+                              </tr>
+                              </table> 
+                              <input type='hidden' value='".$_GET["id"]."' name='id'>    
+                              <input type='hidden' value='".$_GET["pw"]."' name='pw'>     
+                        </form>";
+            }
+            else
+            {                  
+                  echo "U heeft geen rechten op deze pagina. U wordt doorgestuurd naar de homepage";
+                  header("refresh: 4; url=index.php?content=home");
+                  exit();
+            }
 ?>
 
 <h2>Kies een nieuw wachtwoord</h2>
 <?php
-   echo $form;
-
-   }
+      echo $form;
+      }
+      else
+      {
+            echo "Uw account is al geactiveerd. U kunt nu inloggen";
+            header("refresh: 2; url=index.php?content=login_form");
+      }
+}
 ?>
