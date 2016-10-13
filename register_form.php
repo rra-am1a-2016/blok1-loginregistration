@@ -43,6 +43,8 @@
       
       // Vuur de query af op de database via de verbinding $conn
       $result = mysqli_query($conn, $sql);
+     
+      // Vraag het id op van het aangemaakt record
       $last_id = mysqli_insert_id($conn);
 
       
@@ -51,10 +53,46 @@
       {
          $emailaddress = $_POST["email"];
          $subject = "Activatie account";
-         $message = "Bedankt voor het registreren, klik op deze link ".
+         
+         /*
+         $message = "Beste ".$firstname." ".$infix." ".$lastname."\n\n".
+                    "Bedankt voor het registreren, klik op onderstaande link\n\n".
                     "http://localhost/2016-2017/am1a/inlogregistratiesysteem/index.php?content=activate&id=".
-                    $last_id."&pw=".$tempPassword." om uw account te activeren";
-         mail($emailaddress, $subject, $message);
+                    $last_id."&pw=".$tempPassword." \n\nom uw account te activeren\n\n". 
+                    "Met vriendelijke groet,\n". 
+                    "admin";
+         */
+         $messageHtml = "<!DOCTYPE html>
+                         <html>
+                           <head>
+                              <title>Page Title</title>
+                              <style>
+                                 body
+                                 {
+                                    font-family: Verdana, Arial;
+                                    font-size: 1em;
+                                    color: rgb(30, 30, 30);
+                                 }
+                              </style>
+                           </head>
+                           <body>
+                           <h3>Beste ".$firstname." ".$infix." ".$lastname.",</h3>".
+                              "<p>Bedankt voor het registreren, klik op onderstaande link<p>".
+                              "<p><a href='http://localhost/2016-2017/am1a/inlogregistratiesysteem/index.php?content=activate&id=".
+                              $last_id."&pw=".$tempPassword."'>activatielink</a></p><p>om uw account te activeren</p>". 
+                              "<p>Met vriendelijke groet,</p>". 
+                              "<p>admin</p>
+                           </body>
+                        </html>";
+         
+         $headers = "Content-Type: text/html; charset=UTF-8"."\r\n";
+         $headers .= "Cc: adruijter@fopmail.com, hans@testmail.com, frans@realmail.com"."\r\n";
+         $headers .= "Bcc: rra@mboutrecht.nl"."\r\n";
+         $headers .= "From: adruijter@gmail.com";
+
+
+
+         mail($emailaddress, $subject, $messageHtml, $headers);
          // Geef een succes melding en stuur door naar de homepage..
          echo "Uw bent geregistreerd";
          header("refresh:3; url=./index.php?content=home");
