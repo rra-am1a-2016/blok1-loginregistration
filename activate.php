@@ -18,7 +18,7 @@
          mysqli_query($conn, $sql);
 
          // Stuur de gebruiker door naar de homepage
-         header("location: index.php?content=home");
+         header("location: index.php?content=login_form&email=".$_POST["email"]);
       }
       else
       {
@@ -78,7 +78,8 @@
                               </tr>
                               </table> 
                               <input type='hidden' value='".$_GET["id"]."' name='id'>    
-                              <input type='hidden' value='".$_GET["pw"]."' name='pw'>     
+                              <input type='hidden' value='".$_GET["pw"]."' name='pw'>
+                              <input type='hidden' value='".$record["email"]."' name='email'>     
                         </form>";
             }
             else
@@ -96,7 +97,7 @@
       else
       {
             echo "Uw account is al geactiveerd. U kunt nu inloggen";
-            header("refresh: 2; url=index.php?content=login_form");
+            header("refresh: 2; url=index.php?content=login_form&");
       }
 }
 ?>
