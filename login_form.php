@@ -32,6 +32,27 @@
          // Maak van de resource $result een array (associatief)
          $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
+         switch($record["userrole"])
+         {
+             case "customer":
+                // stuur door naar customer_home.php
+                header("location: index.php?content=customer_home");
+                break;
+             case "root":
+                // stuur door naar de root_home.php 
+                header("location: index.php?content=root_home");             
+                break;
+             case "admin":
+                // stuur door naar de admin_home.php
+                header("location: index.php?content=admin_home");                
+                break;  
+             default:
+                // stuur door naar de generale homepage home.php
+                header("location: index.php?content=home");                
+                break;
+         }
+
+
          var_dump($record);
       }
    }
