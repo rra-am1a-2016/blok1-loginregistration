@@ -32,6 +32,8 @@
          // Maak van de resource $result een array (associatief)
          $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
+         $_SESSION["userrole"] = $record["userrole"];
+
          switch($record["userrole"])
          {
              case "customer":
