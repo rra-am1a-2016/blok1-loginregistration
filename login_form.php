@@ -10,8 +10,8 @@
 
    if (isset($_POST["submit"]))
    {
-      echo "Er is op de submitknop gedrukt";
-      var_dump($_POST);
+      //echo "Er is op de submitknop gedrukt";
+      //var_dump($_POST);
       // Eerst contact maken met de mysql-server
       include("./connect_db.php");
 
@@ -21,16 +21,18 @@
               AND   `password`    = '".sha1($_POST["password"])."'";
 
       //echo $sql;exit();
-
+      
       // Stuur de query naar de database...
       $result = mysqli_query($conn, $sql);
-
+      
+      
       // Tel hoeveel records er zijn gevonden
       if ( mysqli_num_rows($result) > 0 )
       {
 
          // Maak van de resource $result een array (associatief)
          $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
+         var_dump($record);
 
          $_SESSION["userrole"] = $record["userrole"];
 
@@ -52,17 +54,16 @@
                 // stuur door naar de generale homepage home.php
                 header("location: index.php?content=home");                
                 break;
-         }
-
-
-         var_dump($record);
+         }         
+      }
+      else
+      {
+          echo "De door u gebruikte combinatie van gebruikersnaam en wachtwoord is niet bekend in de database";
+          header("Refresh: 4; url=index.php?content=login_form");
       }
    }
    else
    {
-      echo "Er is niet gedrukt op de submitknop";
-   
-
 ?>
 
 
