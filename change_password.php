@@ -19,9 +19,16 @@
 
       $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-      
+      if ( $_SESSION["userrole"] == 'admin')
+      {
+         $old_password = $record["password"];
+      }
+      else
+      {
+         $old_password = sha1($_POST["old_password"]);
+      }
 
-      if ( strcmp($record["password"], sha1($_POST["old_password"])) == 0)
+      if ( strcmp($record["password"], $old_password) == 0)
       {
          $sql = "UPDATE `users` 
                  SET `password` = '".sha1($_POST["password"])."'
@@ -59,12 +66,21 @@
       $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
       var_dump($record);
+      $formtekst = "";
+      $formtekst .=  "<form action='index.php?content=change_password' method='post'>
+                        <table>
+                           <tr>
+                              <td>oude wachtwoord: </td>
+                              <td><input type='password' name='old_password' ";
+                           
+                               if ($_SESSION['userrole'] == 'admin') 
+                               { 
+                                  $formtekst .= "placeholder='Als admin niet invullen' ";
+                                  $formtekst .= "readonly";
 
-      echo "<form action='index.php?content=change_password' method='post'>
-               <table>
-                  <tr>
-                     <td>oude wachtwoord: </td>
-                     <td><input type='password' name='old_password'></td>
+                               } 
+                           
+      $formtekst .= "></td>
                   </tr>
                   <tr>
                      <td>wachtwoord: </td>
@@ -82,12 +98,18 @@
                <input type='hidden' name='id' value='".$_GET["id"]."'>
            </form>";
 
+      echo $formtekst;
+
       exit();
    }
 
    // een sql-query die alle users selecteerd
    // Code...
    $sql = "SELECT * FROM `users`";
+   if ( !($_SESSION["userrole"] == 'admin'))
+   {
+      $sql .= " WHERE `id` = ".$_SESSION["id"];
+   }
 
    // Vuur de query af op de database
    // code...
